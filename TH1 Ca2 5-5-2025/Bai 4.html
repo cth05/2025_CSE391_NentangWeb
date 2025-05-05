@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Information Form</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .section {
+        margin-bottom: 20px;
+      }
+
+      .section-header {
+        font-weight: bold;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+      }
+
+      .form-group {
+        display: flex;
+        margin-bottom: 10px;
+        align-items: flex-start;
+      }
+
+      .form-label {
+        width: 150px;
+        padding-top: 6px;
+        font-size: 14px;
+      }
+
+      .form-control {
+        flex: 1;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #aaa;
+      }
+
+      textarea {
+        height: 110px;
+        resize: vertical;
+      }
+
+      .radio-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .radio-option {
+        margin-bottom: 3px;
+      }
+
+      .info-icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-color: #eee;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 16px;
+        font-size: 12px;
+        margin-left: 5px;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        padding: 3px;
+        margin-bottom: 5px;
+      }
+
+      .tool-btn {
+        border: 1px solid #ccc;
+        background: #fff;
+        padding: 2px 5px;
+        margin: 2px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .captcha {
+        text-align: center;
+        font-family: monospace;
+        font-size: 24px;
+        letter-spacing: 12px;
+        margin: 10px 0;
+      }
+
+      .captcha-help {
+        text-align: right;
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 5px;
+      }
+
+      .button-row {
+        display: flex;
+        margin-top: 20px;
+      }
+
+      .nav-buttons {
+        display: flex;
+      }
+
+      .action-buttons {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .btn {
+        padding: 6px 12px;
+        margin-left: 5px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+
+      .btn-nav {
+        background-color: #000;
+        color: white;
+        width: 30px;
+      }
+
+      .btn-submit {
+        background-color: #333;
+        color: white;
+      }
+
+      .btn-cancel {
+        background-color: #ccc;
+      }
+
+      .required-note {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #555;
+      }
+
+      .captcha-help {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form action="#" method="post">
+        <div class="section">
+          <div class="section-header">Basic Info</div>
+          <div class="form-group">
+            <label for="employee-id" class="form-label">Employee ID</label>
+            <div class="form-control">
+              <input type="text" id="employee-id" name="employee-id" value="" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="last-name" class="form-label">Last Name</label>
+            <div class="form-control">
+              <input type="text" id="last-name" name="last-name" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="first-name" class="form-label">First Name</label>
+            <div class="form-control">
+              <input type="text" id="first-name" name="first-name" value="">
+              <span class="info-icon">i</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Gender</label>
+            <div class="form-control">
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" id="gender-male" name="gender" value="male">
+                  <label for="gender-male">Male</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="gender-female" name="gender" value="female" checked>
+                  <label for="gender-female">Female</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="gender-other" name="gender" value="other">
+                  <label for="gender-other">Other</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="gender-zzz" name="gender" value="zzz">
+                  <label for="gender-zzz">ZZZ</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="title" class="form-label">Title</label>
+            <div class="form-control">
+              <input type="text" id="title" name="title" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="suffix" class="form-label">Suffix</label>
+            <div class="form-control">
+              <input type="text" id="suffix" name="suffix" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="birthdate" class="form-label">Birthdate</label>
+            <div class="form-control">
+              <input type="datetime-local" id="birthdate" name="birthdate" value="">
+              <span class="info-icon">?</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="hiredate" class="form-label">HireDate</label>
+            <div class="form-control">
+              <input type="datetime-local" id="hiredate" name="hiredate" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ssn" class="form-label">SSN # (if applicable)</label>
+            <div class="form-control">
+              <input type="text" id="ssn" name="ssn">
+              <span class="info-icon">D</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reports-to" class="form-label">Reports To</label>
+            <div class="form-control">
+              <select id="reports-to" name="reports-to" style="width: auto;">
+                <option selected>Buchanan</option>
+                <option>Smith</option>
+                <option>Johnson</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="section-header">Contact Info</div>
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <div class="form-control">
+              <input type="email" id="email" name="email" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address" class="form-label">Address</label>
+            <div class="form-control">
+              <input type="text" id="address" name="address" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="city" class="form-label">City</label>
+            <div class="form-control">
+              <input type="text" id="city" name="city" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="region" class="form-label">Region</label>
+            <div class="form-control">
+              <input type="text" id="region" name="region">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="postal-code" class="form-label">Postal Code</label>
+            <div class="form-control">
+              <input type="text" id="postal-code" name="postal-code" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="country" class="form-label">Country</label>
+            <div class="form-control">
+              <select id="country" name="country" style="width: auto;">
+                <option selected>Russian Federation</option>
+                <option>United Kingdom</option>
+                <option>United States</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="phone" class="form-label">US Home Phone</label>
+            <div class="form-control">
+              <input type="tel" id="phone" name="phone" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="photo" class="form-label">Photo</label>
+            <div class="form-control">
+              <input type="file" id="photo" name="photo" value="">
+            </div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="section-header">Optional Info</div>
+          <div class="form-group">
+            <label for="notes" class="form-label">Notes</label>
+            <div class="form-control">
+              <div class="toolbar">
+                <button type="button" class="tool-btn">B</button>
+                <button type="button" class="tool-btn">I</button>
+                <button type="button" class="tool-btn">U</button>
+                <button type="button" class="tool-btn">S</button>
+                <button type="button" class="tool-btn">│</button>
+                <button type="button" class="tool-btn">▌</button>
+                <button type="button" class="tool-btn">▐</button>
+                <button type="button" class="tool-btn">═</button>
+                <button type="button" class="tool-btn">┼</button>
+                <button type="button" class="tool-btn">│</button>
+                <button type="button" class="tool-btn">→</button>
+                <button type="button" class="tool-btn">✓</button>
+                <button type="button" class="tool-btn">↔</button>
+                <button type="button" class="tool-btn">│</button>
+                <button type="button" class="tool-btn">1.</button>
+                <button type="button" class="tool-btn">•</button>
+                <button type="button" class="tool-btn">▪</button>
+                <button type="button" class="tool-btn">═</button>
+              </div>
+              <textarea id="notes" name="notes"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Preferred Shift</label>
+            <div class="form-control">
+              <div>
+                <input type="checkbox" id="shift-regular" name="shift-regular" checked>
+                <label for="shift-regular">Regular</label>
+              </div>
+              <div>
+                <input type="checkbox" id="shift-graveyard" name="shift-graveyard" checked>
+                <label for="shift-graveyard">Graveyard</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="active" class="form-label">Active?</label>
+            <div class="form-control">
+              <input type="checkbox" id="active" name="active" checked>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="captcha-input" class="form-label">Are you human?</label>
+            <div class="form-control">
+              <div class="captcha"></div>
+              <div class="captcha-help">Click to change</div>
+              <input type="text" id="captcha-input" name="captcha">
+            </div>
+          </div>
+        </div>
+        <div class="button-row">
+          <div class="action-buttons">
+            <button type="submit" class="btn btn-submit">Submit</button>
+            <button type="button" class="btn btn-cancel">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script>
+    function generateCaptcha(length = 6) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let captcha = '';
+      for (let i = 0; i < length; i++) {
+        captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return captcha;
+    }
+
+    function updateCaptcha() {
+      const captchaText = document.querySelector('.captcha');
+      captchaText.textContent = generateCaptcha();
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCaptcha();
+      const captchaHelp = document.querySelector('.captcha-help');
+      if (captchaHelp) {
+        captchaHelp.style.cursor = 'pointer';
+        captchaHelp.addEventListener('click', updateCaptcha);
+      }
+      const captchaBox = document.querySelector('.captcha');
+      if (captchaBox) {
+        captchaBox.style.cursor = 'pointer';
+        captchaBox.addEventListener('click', updateCaptcha);
+      }
+    });
+  </script>
+</html>
