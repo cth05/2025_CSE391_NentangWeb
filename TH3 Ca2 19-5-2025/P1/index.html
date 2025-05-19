@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To Do List</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .completed {
+      text-decoration: line-through;
+      color: #6c757d;
+    }
+
+    .checkbox-container {
+      margin-right: 10px;
+    }
+
+    .edit-input {
+      width: 100%;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">To Do List</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <form id="todo-form">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" id="todo-input" placeholder="Add new task" required />
+                <button class="btn btn-primary" type="submit">Add</button>
+              </div>
+            </form>
+            <ul class="list-group" id="todo-list">
+              <!-- Tasks will be added here dynamically -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let tasks = [];
+
+    function saveTasksToLocalStorage() {
+      localStorage.setItem("todoTasks", JSON.stringify(tasks));
+    }
+
+    function loadTasksFromLocalStorage() {
+      const stored = localStorage.getItem("todoTasks");
+      if (stored) {
+        tasks = JSON.parse(stored);
+        tasks.forEach(task => addTask(task.text, task.isDone));
+      }
+    }
+
+    function addTask(task, isCompleted = false) {
+      const todoList = document.getElementById("todo-list");
+
+      const li = document.createElement("li");
+      li.className = "list-group-item d-flex justify-content-between align-items-center";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "form-check-input task-checkbox";
+      checkbox.checked = isCompleted;
+
+      const checkboxContainer = document.createElement("div");
+      checkboxContainer.className = "checkbox-container";
+      checkboxContainer.appendChild(checkbox);
+
+      const taskTextSpan = document.createElement("span");
+      taskTextSpan.className = "task-text flex-grow-1";
+      if (isCompleted) {
+        taskTextSpan.classList.add("completed");
+      }
+      taskTextSpan.textContent = task;
+
+      const editInput = document.createElement("input");
+      editInput.type = "text";
+      editInput.className = "form-control edit-input";
+      editInput.style.display = "none";
+      editInput.value = task;
+
+      const btnGroup = document.createElement("div");
+      btnGroup.className = "btn-group";
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "btn btn-danger btn-sm delete-btn";
+      deleteBtn.innerHTML = "&#x2715;";
+
+      const editBtn = document.createElement("button");
+      editBtn.className = "btn btn-primary btn-sm edit-btn";
+      editBtn.innerHTML = "&#9998;";
+
+      btnGroup.appendChild(deleteBtn);
+      btnGroup.appendChild(editBtn);
+
+      li.appendChild(checkboxContainer);
+      li.appendChild(taskTextSpan);
+      li.appendChild(editInput);
+      li.appendChild(btnGroup);
+
+      todoList.appendChild(li);
+
+      // Thêm mới vào mảng nếu chưa tồn tại (dùng khi load từ storage thì không cần push)
+      if (!isTaskInList(task)) {
+        tasks.push({ text: task, isDone: isCompleted });
+        saveTasksToLocalStorage();
+      }
+    }
+
+    function isTaskInList(text) {
+      return tasks.some(t => t.text === text);
+    }
+
+    document.getElementById("todo-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const taskInput = document.getElementById("todo-input");
+      const task = taskInput.value.trim();
+      if (task !== "") {
+        addTask(task);
+        taskInput.value = "";
+      } else {
+        alert("Vui lòng nhập công việc.");
+      }
+    });
+
+    // Xử lý sự kiện chung cho todo-list
+    document.getElementById("todo-list").addEventListener("click", function (event) {
+      const li = event.target.closest("li");
+      if (!li) return;
+
+      const taskTextSpan = li.querySelector(".task-text");
+      const taskText = taskTextSpan.textContent;
+
+      // XÓA
+      if (event.target.classList.contains("delete-btn")) {
+        tasks = tasks.filter(t => t.text !== taskText);
+        li.remove();
+        saveTasksToLocalStorage();
+      }
+
+      // CHỈNH SỬA
+      if (event.target.classList.contains("edit-btn")) {
+        const editInput = li.querySelector(".edit-input");
+
+        if (taskTextSpan.style.display !== "none") {
+          taskTextSpan.style.display = "none";
+          editInput.style.display = "block";
+          editInput.focus();
+          event.target.innerHTML = "&#10004;";
+        } else {
+          const newText = editInput.value.trim();
+          if (newText !== "") {
+            taskTextSpan.textContent = newText;
+            taskTextSpan.style.display = "block";
+            editInput.style.display = "none";
+            event.target.innerHTML = "&#9998;";
+            tasks = tasks.map(t => {
+              if (t.text === taskText) t.text = newText;
+              return t;
+            });
+            saveTasksToLocalStorage();
+          } else {
+            alert("Nội dung không được để trống!");
+          }
+        }
+      }
+    });
+
+    // Đánh dấu hoàn thành
+    document.getElementById("todo-list").addEventListener("change", function (event) {
+      if (event.target.classList.contains("task-checkbox")) {
+        const li = event.target.closest("li");
+        const taskText = li.querySelector(".task-text");
+        const textContent = taskText.textContent;
+        if (event.target.checked) {
+          taskText.classList.add("completed");
+        } else {
+          taskText.classList.remove("completed");
+        }
+        tasks = tasks.map(t => {
+          if (t.text === textContent) t.isDone = event.target.checked;
+          return t;
+        });
+        saveTasksToLocalStorage();
+      }
+    });
+
+    // Load dữ liệu khi trang mở lại
+    window.onload = loadTasksFromLocalStorage;
+  </script>
+</body>
+
+</html>
